@@ -1,9 +1,6 @@
-﻿using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using System.Media;
+using Spectre.Console;
 
 namespace JuegroSudoko1
 {
@@ -11,7 +8,7 @@ namespace JuegroSudoko1
     {
         private int[,] tablero;
         private int puntuacion;
-        //private SoundPlayer reproductorSonido;
+        private SoundPlayer reproductorSonido;
 
         public Juego()
         {
@@ -28,12 +25,12 @@ namespace JuegroSudoko1
                 { 0, 0, 0, 0, 8, 0, 0, 7, 9 }
             };
             puntuacion = 0;
-            //reproductorSonido = new SoundPlayer("background.wav");
+            reproductorSonido = new SoundPlayer(@"C:\Users\briya\Desktop\Will\JuegroSudoko1Demo\background.wav");
         }
 
         public void Iniciar()
         {
-            //reproductorSonido.PlayLooping();
+            reproductorSonido.PlayLooping();
             while (true)
             {
                 AnsiConsole.Clear();
@@ -41,9 +38,7 @@ namespace JuegroSudoko1
                     new SelectionPrompt<string>()
                         .Title("Bienvenido al Juego de Sudoku")
                         .PageSize(10)
-                        .AddChoices(new[] {
-                            "Jugar", "Ayuda", "Salir"
-                        }));
+                        .AddChoices(new[] { "Jugar", "Ayuda", "Salir" }));
 
                 switch (eleccion)
                 {
@@ -54,7 +49,7 @@ namespace JuegroSudoko1
                         MostrarAyuda();
                         break;
                     case "Salir":
-                        //reproductorSonido.Stop();
+                        reproductorSonido.Stop();
                         return;
                 }
             }
@@ -191,10 +186,10 @@ namespace JuegroSudoko1
             puntuacion = 0;
         }
 
-        private void ReproducirSonido(string archivoSonido)
+        private static void ReproducirSonido(string filePath)
         {
-            //SoundPlayer reproductor = new SoundPlayer(archivoSonido);
-            //reproductor.Play();
+            SoundPlayer musicPlayer = new SoundPlayer(filePath);
+            musicPlayer.Play();
         }
     }
 }
